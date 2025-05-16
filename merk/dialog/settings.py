@@ -27,6 +27,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5 import QtCore
+from PyQt5.QtMultimedia import QSound
 
 from ..resources import *
 from .. import config
@@ -544,6 +545,33 @@ class Dialog(QDialog):
 		self.save()
 		os.execl(sys.executable, sys.executable, *sys.argv)
 
+	def playSound(self):
+		QSound.play(self.sound)
+		self.selector.setFocus()
+	
+	def soundDefault(self):
+		self.sound = BELL_NOTIFICATION
+
+		bname = os.path.basename(self.sound)
+		self.soundLabel.setText("<b>"+bname+"</b>")
+
+		self.changed.show()
+		self.boldApply()
+		self.selector.setFocus()
+
+	def setSound(self):
+		options = QFileDialog.Options()
+		options |= QFileDialog.DontUseNativeDialog
+		fileName, _ = QFileDialog.getOpenFileName(self,"Open WAV", INSTALL_DIRECTORY, f"WAV file (*.wav)", options=options)
+		if fileName:
+			self.sound = fileName
+			bname = os.path.basename(self.sound)
+			self.soundLabel.setText("<b>"+bname+"</b>")
+
+			self.changed.show()
+			self.boldApply()
+			self.selector.setFocus()
+
 	def __init__(self,app=None,parent=None):
 		super(Dialog,self).__init__(parent)
 
@@ -599,6 +627,8 @@ class Dialog(QDialog):
 		self.default_settings_menu = config.MAIN_MENU_SETTINGS_NAME
 
 		self.interval = config.LOG_SAVE_INTERVAL
+
+		self.sound = config.SOUND_NOTIFICATION_FILE
 
 		self.syntax_did_change = False
 
@@ -2051,7 +2081,8 @@ class Dialog(QDialog):
 		self.notifyDescription = QLabel("""
 			<small>
 			Audio notifications, when enabled, play a sound (by default, a bell) every time
-			one of the listed events occur.
+			one of the listed events occur. Any file of any length can be used for the notification
+			sound; the only limitation is that the file must be a WAV file.
 			</small>
 			<br>
 			""")
@@ -2074,16 +2105,57 @@ class Dialog(QDialog):
 		anoticeMode.addWidget(self.notifyNotice)
 		anoticeMode.addWidget(self.notifyMode)
 
+		bname = os.path.basename(self.sound)
+		self.soundLabel = QLabel("<b>"+bname+"</b>")
+
+		soundButton = QPushButton("")
+		soundButton.clicked.connect(self.setSound)
+		soundButton.setAutoDefault(False)
+
+		fm = QFontMetrics(self.font())
+		fheight = fm.height()
+		soundButton.setFixedSize(fheight +10,fheight + 10)
+		soundButton.setIcon(QIcon(EDIT_ICON))
+		soundButton.setToolTip("Set notification sound file")
+
+		playButton = QPushButton(" Play")
+		playButton.clicked.connect(self.playSound)
+		playButton.setAutoDefault(False)
+		playButton.setIcon(QIcon(RUN_ICON))
+		playButton.setToolTip("Play sound")
+
+		soundDefault = QPushButton("Set to default")
+		soundDefault.clicked.connect(self.soundDefault)
+		soundDefault.setAutoDefault(False)
+		soundDefault.setToolTip("Set to default")
+
+		sbLayout = QHBoxLayout()
+		sbLayout.addStretch()
+		sbLayout.addWidget(soundButton)
+		sbLayout.addWidget(self.soundLabel)
+		sbLayout.addStretch()
+
+		sbLayout2 = QHBoxLayout()
+		sbLayout2.addStretch()
+		sbLayout2.addWidget(playButton)
+		sbLayout2.addWidget(soundDefault)
+		sbLayout2.addStretch()
+
+
 		audioLayout = QVBoxLayout()
 		audioLayout.addWidget(widgets.textSeparatorLabel(self,"<b>audio notifications</b>"))
 		audioLayout.addWidget(self.notifyDescription)
 		audioLayout.addWidget(self.audioNotifications)
 		audioLayout.addWidget(QLabel(' '))
-		audioLayout.addWidget(widgets.textSeparatorLabel(self,"<b>notifications</b>"))
+		audioLayout.addWidget(widgets.textSeparatorLabel(self,"<b>events</b>"))
 		audioLayout.addLayout(anickPriv)
 		audioLayout.addLayout(akickInvite)
 		audioLayout.addLayout(anoticeMode)
 		audioLayout.addLayout(adiscLay)
+		audioLayout.addWidget(QLabel(' '))
+		audioLayout.addWidget(widgets.textSeparatorLabel(self,"<b>sound file</b>"))
+		audioLayout.addLayout(sbLayout)
+		audioLayout.addLayout(sbLayout2)
 		audioLayout.addStretch()
 
 		self.notificationsPage.setLayout(audioLayout)
@@ -2248,6 +2320,7 @@ class Dialog(QDialog):
 		config.SOUND_NOTIFICATION_KICK = self.notifyKick.isChecked()
 		config.SOUND_NOTIFICATION_INVITE = self.notifyInvite.isChecked()
 		config.SOUND_NOTIFICATION_MODE = self.notifyMode.isChecked()
+		config.SOUND_NOTIFICATION_FILE = self.sound
 
 		if self.interval!=config.LOG_SAVE_INTERVAL:
 			config.LOG_SAVE_INTERVAL = self.interval
