@@ -239,6 +239,8 @@ PYQT_ICON = ":/icon-pyqt.png"
 CONNECT_DIALOG_ICON = ":/icon-connect_connect_dialog.png"
 NETWORK_MENU_ICON = ":/icon-network_menu.png"
 
+NOTIFICATION_ICON = ":/icon-notifications.png"
+
 SPLASH_LOGO = ":/gui-splash.png"
 VERTICAL_SPLASH_LOGO = ":/gui-vertical.png"
 DISCONNECT_DIALOG_IMAGE = ":/gui-disconnect_dialog.png"
@@ -255,6 +257,8 @@ HORIZONTAL_RULE_BACKGROUND = ":/gui-horizontal_rule.png"
 LIGHT_HORIZONTAL_DOTTED_BACKGROUND = ":/gui-light_horizontal_dotted.png"
 LIGHT_HORIZONTAL_RULE_BACKGROUND = ":/gui-light_horizontal_rule.png"
 NUTJOB_LOGO = ":/gui-nutjob.png"
+
+BELL_NOTIFICATION = ":/sound-notification.wav"
 
 
 HELP_ENTRY_TEMPLATE='''<tr><td>%_USAGE_%&nbsp;</td><td>%_DESCRIPTION_%</td></tr>'''

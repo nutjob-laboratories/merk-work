@@ -216,6 +216,27 @@ class Dialog(QDialog):
 		
 		self.syntax_did_change = True
 		self.selector.setFocus()
+
+	def changedNotifications(self,state):
+		if not self.audioNotifications.isChecked():
+			self.notifyDisco.setEnabled(False)
+			self.notifyNickname.setEnabled(False)
+			self.notifyPrivate.setEnabled(False)
+			self.notifyNotice.setEnabled(False)
+			self.notifyKick.setEnabled(False)
+			self.notifyInvite.setEnabled(False)
+			self.notifyMode.setEnabled(False)
+		else:
+			self.notifyDisco.setEnabled(True)
+			self.notifyNickname.setEnabled(True)
+			self.notifyPrivate.setEnabled(True)
+			self.notifyNotice.setEnabled(True)
+			self.notifyKick.setEnabled(True)
+			self.notifyInvite.setEnabled(True)
+			self.notifyMode.setEnabled(True)
+		self.changed.show()
+		self.boldApply()
+		self.selector.setFocus()
 		
 
 	def changedSystrayMin(self,state):
@@ -1970,6 +1991,103 @@ class Dialog(QDialog):
 
 		self.syntaxPage.setLayout(syntaxLayout)
 
+		# Notifications
+
+		self.notificationsPage = QWidget()
+
+		entry = QListWidgetItem()
+		entry.setTextAlignment(Qt.AlignHCenter|Qt.AlignVCenter)
+		entry.setText("Notifications")
+		entry.widget = self.notificationsPage
+		entry.setIcon(QIcon(NOTIFICATION_ICON))
+		self.selector.addItem(entry)
+
+		self.stack.addWidget(self.notificationsPage)
+
+		self.audioNotifications = QCheckBox("Play audio notifications",self)
+		if config.SOUND_NOTIFICATIONS: self.audioNotifications.setChecked(True)
+		self.audioNotifications.stateChanged.connect(self.changedNotifications)
+
+		self.notifyDisco = QCheckBox("Disconnection from server",self)
+		if config.SOUND_NOTIFICATION_DISCONNECT: self.notifyDisco.setChecked(True)
+		self.notifyDisco.stateChanged.connect(self.changedSetting)
+
+		self.notifyNickname = QCheckBox("Nickname\nmention",self)
+		if config.SOUND_NOTIFICATION_NICKNAME: self.notifyNickname.setChecked(True)
+		self.notifyNickname.stateChanged.connect(self.changedSetting)
+		self.notifyNickname.setStyleSheet("QCheckBox { text-align: left top; } QCheckBox::indicator { subcontrol-origin: padding; subcontrol-position: left top; }")
+
+		self.notifyPrivate = QCheckBox("Private\nmessage",self)
+		if config.SOUND_NOTIFICATION_PRIVATE: self.notifyPrivate.setChecked(True)
+		self.notifyPrivate.stateChanged.connect(self.changedSetting)
+		self.notifyPrivate.setStyleSheet("QCheckBox { text-align: left top; } QCheckBox::indicator { subcontrol-origin: padding; subcontrol-position: left top; }")
+
+		self.notifyNotice = QCheckBox("Notice",self)
+		if config.SOUND_NOTIFICATION_NOTICE: self.notifyNotice.setChecked(True)
+		self.notifyNotice.stateChanged.connect(self.changedSetting)
+
+		self.notifyKick = QCheckBox("Kick",self)
+		if config.SOUND_NOTIFICATION_KICK: self.notifyKick.setChecked(True)
+		self.notifyKick.stateChanged.connect(self.changedSetting)
+
+		self.notifyInvite = QCheckBox("Invite",self)
+		if config.SOUND_NOTIFICATION_INVITE: self.notifyInvite.setChecked(True)
+		self.notifyInvite.stateChanged.connect(self.changedSetting)
+
+		self.notifyMode = QCheckBox("Channel mode\nchange",self)
+		if config.SOUND_NOTIFICATION_MODE: self.notifyMode.setChecked(True)
+		self.notifyMode.stateChanged.connect(self.changedSetting)
+		self.notifyMode.setStyleSheet("QCheckBox { text-align: left top; } QCheckBox::indicator { subcontrol-origin: padding; subcontrol-position: left top; }")
+
+		if not self.audioNotifications.isChecked():
+			self.notifyDisco.setEnabled(False)
+			self.notifyNickname.setEnabled(False)
+			self.notifyPrivate.setEnabled(False)
+			self.notifyNotice.setEnabled(False)
+			self.notifyKick.setEnabled(False)
+			self.notifyInvite.setEnabled(False)
+			self.notifyMode.setEnabled(False)
+		
+		self.notifyDescription = QLabel("""
+			<small>
+			Audio notifications, when enabled, play a sound (by default, a bell) every time
+			one of the listed events occur.
+			</small>
+			<br>
+			""")
+		self.notifyDescription.setWordWrap(True)
+		self.notifyDescription.setAlignment(Qt.AlignJustify)
+
+		adiscLay = QHBoxLayout()
+		adiscLay.addWidget(self.notifyDisco)
+		adiscLay.addStretch()
+
+		anickPriv = QHBoxLayout()
+		anickPriv.addWidget(self.notifyNickname)
+		anickPriv.addWidget(self.notifyPrivate)
+
+		akickInvite = QHBoxLayout()
+		akickInvite.addWidget(self.notifyKick)
+		akickInvite.addWidget(self.notifyInvite)
+
+		anoticeMode = QHBoxLayout()
+		anoticeMode.addWidget(self.notifyNotice)
+		anoticeMode.addWidget(self.notifyMode)
+
+		audioLayout = QVBoxLayout()
+		audioLayout.addWidget(widgets.textSeparatorLabel(self,"<b>audio notifications</b>"))
+		audioLayout.addWidget(self.notifyDescription)
+		audioLayout.addWidget(self.audioNotifications)
+		audioLayout.addWidget(QLabel(' '))
+		audioLayout.addWidget(widgets.textSeparatorLabel(self,"<b>notifications</b>"))
+		audioLayout.addLayout(anickPriv)
+		audioLayout.addLayout(akickInvite)
+		audioLayout.addLayout(anoticeMode)
+		audioLayout.addLayout(adiscLay)
+		audioLayout.addStretch()
+
+		self.notificationsPage.setLayout(audioLayout)
+
 		self.changed.hide()
 		self.restart.hide()
 
@@ -2122,6 +2240,14 @@ class Dialog(QDialog):
 		config.MAXIMIZE_ON_STARTUP = self.maxOnStart.isChecked()
 		config.SHOW_LINKS_TO_NETWORK_WEBPAGES = self.showNetLinks.isChecked()
 		config.DISPLAY_NICK_ON_SERVER_WINDOWS = self.displayServNicks.isChecked()
+		config.SOUND_NOTIFICATIONS = self.audioNotifications.isChecked()
+		config.SOUND_NOTIFICATION_DISCONNECT = self.notifyDisco.isChecked()
+		config.SOUND_NOTIFICATION_NICKNAME = self.notifyNickname.isChecked()
+		config.SOUND_NOTIFICATION_PRIVATE = self.notifyPrivate.isChecked()
+		config.SOUND_NOTIFICATION_NOTICE = self.notifyNotice.isChecked()
+		config.SOUND_NOTIFICATION_KICK = self.notifyKick.isChecked()
+		config.SOUND_NOTIFICATION_INVITE = self.notifyInvite.isChecked()
+		config.SOUND_NOTIFICATION_MODE = self.notifyMode.isChecked()
 
 		if self.interval!=config.LOG_SAVE_INTERVAL:
 			config.LOG_SAVE_INTERVAL = self.interval
