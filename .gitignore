@@ -1,0 +1,5 @@
+
+*.pyc
+.merk/*
+*.odt#
+merk_setup.iss
