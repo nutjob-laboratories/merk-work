@@ -238,7 +238,6 @@ PYINSTALLER_ICON = ":/icon-pyinstaller.png"
 PYQT_ICON = ":/icon-pyqt.png"
 CONNECT_DIALOG_ICON = ":/icon-connect_connect_dialog.png"
 NETWORK_MENU_ICON = ":/icon-network_menu.png"
-
 NOTIFICATION_ICON = ":/icon-notifications.png"
 
 SPLASH_LOGO = ":/gui-splash.png"
