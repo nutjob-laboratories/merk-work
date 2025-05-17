@@ -570,7 +570,7 @@ class Dialog(QDialog):
 
 			self.changed.show()
 			self.boldApply()
-			self.selector.setFocus()
+		self.selector.setFocus()
 
 	def __init__(self,app=None,parent=None):
 		super(Dialog,self).__init__(parent)
