@@ -559,17 +559,42 @@ class Dialog(QDialog):
 		self.boldApply()
 		self.selector.setFocus()
 
+	def is_wav_file(self,file_path):
+		if not os.path.isfile(file_path):
+			return False
+		
+		try:
+			with open(file_path, 'rb') as f:
+				header = f.read(44)  # Read the first 44 bytes (standard WAV header size)
+				return header[:4] == b'RIFF' and header[8:12] == b'WAVE' and header[12:16] == b'fmt '
+		except Exception:
+			return False
+
+	def show_error_message(self,title, message):
+		msg_box = QMessageBox()
+		msg_box.setIcon(QMessageBox.Critical)
+		msg_box.setWindowTitle(title)
+		msg_box.setWindowIcon(QIcon(APPLICATION_ICON))
+		msg_box.setText(message)
+		msg_box.setStandardButtons(QMessageBox.Ok)
+		msg_box.exec_()
+
 	def setSound(self):
+		desktop =  os.path.join(os.path.expanduser("~"), "Desktop")
+		if not os.path.isdir(desktop): desktop = os.path.expanduser("~")
 		options = QFileDialog.Options()
 		options |= QFileDialog.DontUseNativeDialog
-		fileName, _ = QFileDialog.getOpenFileName(self,"Open WAV", INSTALL_DIRECTORY, f"WAV file (*.wav)", options=options)
+		fileName, _ = QFileDialog.getOpenFileName(self,"Open WAV", desktop, f"WAV file (*.wav)", options=options)
 		if fileName:
-			self.sound = fileName
-			bname = os.path.basename(self.sound)
-			self.soundLabel.setText("<b>"+bname+"</b>")
+			if self.is_wav_file(fileName):
+				self.sound = fileName
+				bname = os.path.basename(self.sound)
+				self.soundLabel.setText("<b>"+bname+"</b>")
 
-			self.changed.show()
-			self.boldApply()
+				self.changed.show()
+				self.boldApply()
+			else:
+				self.show_error_message("Wrong file type","File is not a WAV file!\nOnly WAV files can be used as a notification.\nPlease select a valid file.")
 		self.selector.setFocus()
 
 	def __init__(self,app=None,parent=None):
