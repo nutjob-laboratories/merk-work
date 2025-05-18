@@ -2351,19 +2351,12 @@ class Dialog(QDialog):
 			config.LOG_SAVE_INTERVAL = self.interval
 			self.parent.updateInterval()
 
-		self.parent.buildSettingsMenu()
-
 		if self.user_changed:
 			user.NICKNAME = self.nick.text()
 			user.ALTERNATE = self.alternative.text()
 			user.USERNAME = self.username.text()
 			user.REALNAME = self.realname.text()
 			user.save_user(user.USER_FILE)
-
-		# Save new settings to the config file
-		config.save_settings(config.CONFIG_FILE)
-
-		self.parent.app.setStyle(self.qt_style)
 
 		if config.TIMESTAMP_24_HOUR:
 			ts = '%H:%M'
@@ -2372,6 +2365,13 @@ class Dialog(QDialog):
 		if config.TIMESTAMP_SHOW_SECONDS: ts = ts + ':%S'
 
 		config.TIMESTAMP_FORMAT = ts
+
+		# Save new settings to the config file
+		config.save_settings(config.CONFIG_FILE)
+
+		self.parent.buildSettingsMenu()
+
+		self.parent.app.setStyle(self.qt_style)
 
 		self.parent.setAllLanguage(config.DEFAULT_SPELLCHECK_LANGUAGE)
 		if self.rerender: self.parent.reRenderAll()
