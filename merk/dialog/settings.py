@@ -559,17 +559,6 @@ class Dialog(QDialog):
 		self.boldApply()
 		self.selector.setFocus()
 
-	def is_wav_file(self,file_path):
-		if not os.path.isfile(file_path):
-			return False
-		
-		try:
-			with open(file_path, 'rb') as f:
-				header = f.read(44)  # Read the first 44 bytes (standard WAV header size)
-				return header[:4] == b'RIFF' and header[8:12] == b'WAVE' and header[12:16] == b'fmt '
-		except Exception:
-			return False
-
 	def show_error_message(self,title, message):
 		msg_box = QMessageBox()
 		msg_box.setIcon(QMessageBox.Critical)
@@ -586,7 +575,7 @@ class Dialog(QDialog):
 		options |= QFileDialog.DontUseNativeDialog
 		fileName, _ = QFileDialog.getOpenFileName(self,"Open WAV", desktop, f"WAV file (*.wav)", options=options)
 		if fileName:
-			if self.is_wav_file(fileName):
+			if is_wav_file(fileName):
 				self.sound = fileName
 				bname = os.path.basename(self.sound)
 				self.soundLabel.setText("<b>"+bname+"</b>")
@@ -2218,7 +2207,6 @@ class Dialog(QDialog):
 		leftLayout.addWidget(QLabel("<small><center><b>Version "+APPLICATION_VERSION+"</b></center></small>"))
 
 		mainLayout = QHBoxLayout()
-		# mainLayout.addWidget(self.selector)
 		mainLayout.addLayout(leftLayout)
 		mainLayout.addWidget(self.stack)
 
