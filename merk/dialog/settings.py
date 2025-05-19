@@ -1817,7 +1817,6 @@ class Dialog(QDialog):
 			self.sysPrepend.addItem(s)
 		self.sysPrepend.currentIndexChanged.connect(self.prependChange)
 
-
 		self.setSystemPrepend = QLabel(f"Prefix system messages with: <big>{current}</big>")
 
 		prepSel = QHBoxLayout()
@@ -1828,6 +1827,12 @@ class Dialog(QDialog):
 		prepLayout.addWidget(self.setSystemPrepend)
 		prepLayout.addLayout(prepSel)
 
+		self.forceMono = QCheckBox("Force monospace rendering\nof all message text",self)
+		if config.FORCE_MONOSPACE_RENDERING: self.forceMono.setChecked(True)
+		self.forceMono.stateChanged.connect(self.changedSettingRerender)
+
+		self.forceMono.setStyleSheet("QCheckBox { text-align: left top; } QCheckBox::indicator { subcontrol-origin: padding; subcontrol-position: left top; }")
+
 		messageLayout = QVBoxLayout()
 		messageLayout.addWidget(widgets.textSeparatorLabel(self,"<b>message settings</b>"))
 		messageLayout.addWidget(self.showColors)
@@ -1835,6 +1840,7 @@ class Dialog(QDialog):
 		messageLayout.addWidget(self.createWindow)
 		messageLayout.addWidget(self.writePrivate)
 		messageLayout.addWidget(self.writeScroll)
+		messageLayout.addWidget(self.forceMono)
 		messageLayout.addWidget(QLabel(' '))
 		messageLayout.addWidget(widgets.textSeparatorLabel(self,"<b>system messages</b>"))
 		messageLayout.addLayout(prepLayout)
@@ -2334,6 +2340,7 @@ class Dialog(QDialog):
 		config.SOUND_NOTIFICATION_INVITE = self.notifyInvite.isChecked()
 		config.SOUND_NOTIFICATION_MODE = self.notifyMode.isChecked()
 		config.SOUND_NOTIFICATION_FILE = self.sound
+		config.FORCE_MONOSPACE_RENDERING = self.forceMono.isChecked()
 
 		if self.interval!=config.LOG_SAVE_INTERVAL:
 			config.LOG_SAVE_INTERVAL = self.interval

@@ -159,6 +159,7 @@ SOUND_NOTIFICATION_NOTICE = True
 SOUND_NOTIFICATION_MODE = True
 SOUND_NOTIFICATION_FILE = BELL_NOTIFICATION
 SOUND_NOTIFICATIONS = False
+FORCE_MONOSPACE_RENDERING = False
 
 def save_settings(filename):
 
@@ -283,6 +284,7 @@ def save_settings(filename):
 		"do_intermittent_log_saves": DO_INTERMITTENT_LOG_SAVES,
 		"intermittent_log_save_interval": LOG_SAVE_INTERVAL,
 		"maximize_app_on_startup": MAXIMIZE_ON_STARTUP,
+		"force_monospace_text_rendering": FORCE_MONOSPACE_RENDERING,
 	}
 
 	with open(filename, "w") as write_data:
@@ -529,6 +531,8 @@ def patch_settings(settings):
 		settings["show_systray_menu"] = SYSTRAY_MENU
 	if not "maximize_app_on_startup" in settings:
 		settings["maximize_app_on_startup"] = MAXIMIZE_ON_STARTUP
+	if not "force_monospace_text_rendering" in settings:
+		settings["force_monospace_text_rendering"] = FORCE_MONOSPACE_RENDERING
 
 	return settings
 
@@ -654,6 +658,7 @@ def load_settings(filename):
 	global SOUND_NOTIFICATION_MODE
 	global SOUND_NOTIFICATION_FILE
 	global SOUND_NOTIFICATIONS
+	global FORCE_MONOSPACE_RENDERING
 
 	if os.path.isfile(filename):
 		with open(filename, "r") as read_settings:
@@ -663,6 +668,7 @@ def load_settings(filename):
 		settings = patch_settings(settings)
 		postpatch_length = len(settings)
 
+		FORCE_MONOSPACE_RENDERING = settings["force_monospace_text_rendering"]
 		SOUND_NOTIFICATION_NICKNAME = settings["sound_notification_nickname"]
 		SOUND_NOTIFICATION_DISCONNECT = settings["sound_notification_disconnect"]
 		SOUND_NOTIFICATION_PRIVATE = settings["sound_notification_private"]
