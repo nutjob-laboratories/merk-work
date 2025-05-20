@@ -2209,8 +2209,8 @@ class Dialog(QDialog):
 		self.saveButton.clicked.connect(self.save)
 		self.saveButton.setAutoDefault(False)
 
-		cancelButton = QPushButton("Cancel")
-		cancelButton.clicked.connect(self.close)
+		self.cancelButton = QPushButton("Cancel")
+		self.cancelButton.clicked.connect(self.close)
 
 		# Finalize layout
 
@@ -2225,7 +2225,7 @@ class Dialog(QDialog):
 		dialogButtonsLayout.addWidget(self.restart)
 		dialogButtonsLayout.addStretch()
 		dialogButtonsLayout.addWidget(self.saveButton)
-		dialogButtonsLayout.addWidget(cancelButton)
+		dialogButtonsLayout.addWidget(self.cancelButton)
 
 		leftLayout = QVBoxLayout()
 		leftLayout.addWidget(self.selector)
@@ -2236,16 +2236,16 @@ class Dialog(QDialog):
 		mainLayout.addLayout(leftLayout)
 		mainLayout.addWidget(self.stack)
 
-		finalLayout = QVBoxLayout()
-		finalLayout.addLayout(mainLayout)
-		finalLayout.addLayout(dialogButtonsLayout)
+		self.finalLayout = QVBoxLayout()
+		self.finalLayout.addLayout(mainLayout)
+		self.finalLayout.addLayout(dialogButtonsLayout)
 
 		self.setWindowFlags(self.windowFlags()
 					^ QtCore.Qt.WindowContextHelpButtonHint)
 
-		self.setLayout(finalLayout)
+		self.setLayout(self.finalLayout)
 
-		self.setFixedSize(finalLayout.sizeHint())
+		self.setFixedSize(self.finalLayout.sizeHint())
 
 	def save(self):
 
