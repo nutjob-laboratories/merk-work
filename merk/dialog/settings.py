@@ -796,6 +796,9 @@ class Dialog(QDialog):
 
 		self.forceDefault.setStyleSheet("QCheckBox { text-align: left top; } QCheckBox::indicator { subcontrol-origin: padding; subcontrol-position: left top; }")
 
+		self.alwaysOnTop = QCheckBox("Main window always on top",self)
+		if config.ALWAYS_ON_TOP: self.alwaysOnTop.setChecked(True)
+		self.alwaysOnTop.stateChanged.connect(self.changedSetting)
 
 		applicationLayout = QVBoxLayout()
 		applicationLayout.addWidget(widgets.textSeparatorLabel(self,"<b>default font</b>"))
@@ -818,6 +821,7 @@ class Dialog(QDialog):
 		applicationLayout.addWidget(self.showStatusChat)
 		applicationLayout.addWidget(self.showNetLinks)
 		applicationLayout.addWidget(self.displayServNicks)
+		applicationLayout.addWidget(self.alwaysOnTop)
 		applicationLayout.addWidget(self.forceDefault)
 		applicationLayout.addStretch()
 
@@ -2358,6 +2362,17 @@ class Dialog(QDialog):
 		config.SOUND_NOTIFICATION_FILE = self.sound
 		config.FORCE_MONOSPACE_RENDERING = self.forceMono.isChecked()
 		config.FORCE_DEFAULT_STYLE = self.forceDefault.isChecked()
+
+		if self.alwaysOnTop.isChecked():
+			if not config.ALWAYS_ON_TOP:
+				config.ALWAYS_ON_TOP = True
+				self.parent.setWindowFlags(self.parent.windowFlags() | Qt.WindowStaysOnTopHint)
+				self.parent.show()
+		else:
+			if config.ALWAYS_ON_TOP:
+				config.ALWAYS_ON_TOP = False
+				self.parent.setWindowFlags(self.parent.windowFlags() & ~Qt.WindowStaysOnTopHint)
+				self.parent.show()
 
 		if self.interval!=config.LOG_SAVE_INTERVAL:
 			config.LOG_SAVE_INTERVAL = self.interval

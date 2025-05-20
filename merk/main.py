@@ -140,6 +140,9 @@ class Merk(QMainWindow):
 		if config.MAXIMIZE_ON_STARTUP:
 			self.showMaximized()
 
+		if config.ALWAYS_ON_TOP:
+			self.setWindowFlags(QtCore.Qt.Window | QtCore.Qt.WindowStaysOnTopHint)
+
 		# Systray
 		self.flash = QTimer(self)
 		self.flash.timeout.connect(self.blink)
