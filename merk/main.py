@@ -64,6 +64,7 @@ class Merk(QMainWindow):
 			noexecute=False,
 			donotsave=False,
 			simpleconn=False,
+			ontop=False,
 			parent=None,
 		):
 		super(Merk, self).__init__(parent)
@@ -78,6 +79,7 @@ class Merk(QMainWindow):
 		self.noexecute = noexecute
 		self.donotsave = donotsave
 		self.simpleconn = simpleconn
+		self.ontop = ontop
 
 		if not test_if_window_background_is_light(self):
 			self.checked_icon = DARK_CHECKED_ICON
@@ -141,7 +143,11 @@ class Merk(QMainWindow):
 			self.showMaximized()
 
 		if config.ALWAYS_ON_TOP:
-			self.setWindowFlags(QtCore.Qt.Window | QtCore.Qt.WindowStaysOnTopHint)
+			self.setWindowFlags(self.windowFlags() | Qt.WindowStaysOnTopHint)
+
+		if self.ontop:
+			if not config.ALWAYS_ON_TOP:
+				self.setWindowFlags(self.windowFlags() | Qt.WindowStaysOnTopHint)
 
 		# Systray
 		self.flash = QTimer(self)
