@@ -2368,13 +2368,15 @@ class Dialog(QDialog):
 				config.ALWAYS_ON_TOP = True
 				if not self.parent.ontop:
 					self.parent.setWindowFlags(self.parent.windowFlags() | Qt.WindowStaysOnTopHint)
-					self.parent.show()
+					if not self.parent.is_hidden:
+						self.parent.show()
 		else:
 			if config.ALWAYS_ON_TOP:
 				config.ALWAYS_ON_TOP = False
 				if not self.parent.ontop:
 					self.parent.setWindowFlags(self.parent.windowFlags() & ~Qt.WindowStaysOnTopHint)
-					self.parent.show()
+					if not self.parent.is_hidden:
+						self.parent.show()
 
 		if self.interval!=config.LOG_SAVE_INTERVAL:
 			config.LOG_SAVE_INTERVAL = self.interval
