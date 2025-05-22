@@ -3083,7 +3083,10 @@ class Merk(QMainWindow):
 		if event.spontaneous():
 			pass
 
-		if config.ASK_BEFORE_CLOSE:
+		do_ask = False
+		if config.ASK_BEFORE_CLOSE: do_ask = True
+
+		if do_ask:
 			msgBox = QMessageBox()
 			msgBox.setIconPixmap(QPixmap(QUIT_ICON))
 			msgBox.setWindowIcon(QIcon(APPLICATION_ICON))
