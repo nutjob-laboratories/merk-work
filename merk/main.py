@@ -3103,6 +3103,7 @@ class Merk(QMainWindow):
 			return
 
 		self.closeAndRemoveAllWindows()
+		event.accept()
 		self.app.quit()
 
 	# merk_subWindowActivated()
