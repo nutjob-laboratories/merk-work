@@ -3075,6 +3075,31 @@ class Merk(QMainWindow):
 	# any method 
 	def closeEvent(self, event):
 
+		do_close = True
+
+		# This will be true if the window is closed
+		# with the window bar "X" button or if Alt-F4
+		# is pressed
+		if event.spontaneous():
+			pass
+
+		
+		if config.ASK_BEFORE_CLOSE:
+			msgBox = QMessageBox()
+			msgBox.setIconPixmap(QPixmap(QUIT_ICON))
+			msgBox.setWindowIcon(QIcon(APPLICATION_ICON))
+			msgBox.setText("Are you sure you want to exit?")
+			msgBox.setWindowTitle("Exit")
+			msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+
+			rval = msgBox.exec()
+			if rval == QMessageBox.Cancel:
+				do_close = False
+
+		if not do_close:
+			event.ignore()
+			return
+
 		self.closeAndRemoveAllWindows()
 		self.app.quit()
 
