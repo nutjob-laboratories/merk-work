@@ -739,10 +739,6 @@ class Merk(QMainWindow):
 			entry.triggered.connect(self.openSettings)
 			self.trayMenu.addAction(entry)
 
-		# entry = QAction(QIcon(LOG_ICON),"Export Logs",self)
-		# entry.triggered.connect(self.menuExportLog)
-		# self.trayMenu.addAction(entry)
-
 		self.trayLinks = self.trayMenu.addMenu(QIcon(LINK_ICON),"Links")
 
 		entry = QAction(QIcon(LINK_ICON),"Source code",self)
