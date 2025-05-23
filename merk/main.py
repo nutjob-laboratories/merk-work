@@ -730,13 +730,18 @@ class Merk(QMainWindow):
 		e = textSeparator(self,"Options & Tools")
 		self.trayMenu.addAction(e)
 
-		entry = QAction(QIcon(SETTINGS_ICON),"Settings",self)
-		entry.triggered.connect(self.openSettings)
-		self.trayMenu.addAction(entry)
+		if hasattr(self,"settingsMenu"):
+			entry = QAction(QIcon(SETTINGS_ICON),"Settings",self)
+			entry.setMenu(self.settingsMenu)
+			self.trayMenu.addAction(entry)
+		else:
+			entry = QAction(QIcon(SETTINGS_ICON),"Settings",self)
+			entry.triggered.connect(self.openSettings)
+			self.trayMenu.addAction(entry)
 
-		entry = QAction(QIcon(LOG_ICON),"Export Logs",self)
-		entry.triggered.connect(self.menuExportLog)
-		self.trayMenu.addAction(entry)
+		# entry = QAction(QIcon(LOG_ICON),"Export Logs",self)
+		# entry.triggered.connect(self.menuExportLog)
+		# self.trayMenu.addAction(entry)
 
 		self.trayLinks = self.trayMenu.addMenu(QIcon(LINK_ICON),"Links")
 
@@ -752,28 +757,29 @@ class Merk(QMainWindow):
 		entry.triggered.connect(lambda state,u="https://carpedm20.github.io/emoji/all.html?enableList=enable_list_alias": self.openLinkInBrowser(u))
 		self.trayLinks.addAction(entry)
 
-		self.trayFolder = self.trayMenu.addMenu(QIcon(FOLDER_ICON),"Folders")
+		if not hasattr(self,"settingsMenu"):
+			self.trayFolder = self.trayMenu.addMenu(QIcon(FOLDER_ICON),"Folders")
 
-		if not is_running_from_pyinstaller():
-			entry = QAction(QIcon(APPLICATION_ICON),APPLICATION_NAME,self)
-			entry.triggered.connect((lambda : QDesktopServices.openUrl(QUrl("file:"+INSTALL_DIRECTORY))))
+			if not is_running_from_pyinstaller():
+				entry = QAction(QIcon(APPLICATION_ICON),APPLICATION_NAME,self)
+				entry.triggered.connect((lambda : QDesktopServices.openUrl(QUrl("file:"+INSTALL_DIRECTORY))))
+				self.trayFolder.addAction(entry)
+
+			entry = QAction(QIcon(SETTINGS_ICON),"Settings",self)
+			entry.triggered.connect((lambda : QDesktopServices.openUrl(QUrl("file:"+config.CONFIG_DIRECTORY))))
 			self.trayFolder.addAction(entry)
 
-		entry = QAction(QIcon(SETTINGS_ICON),"Settings",self)
-		entry.triggered.connect((lambda : QDesktopServices.openUrl(QUrl("file:"+config.CONFIG_DIRECTORY))))
-		self.trayFolder.addAction(entry)
+			entry = QAction(QIcon(STYLE_ICON),"Styles",self)
+			entry.triggered.connect((lambda : QDesktopServices.openUrl(QUrl("file:"+styles.STYLE_DIRECTORY))))
+			self.trayFolder.addAction(entry)
 
-		entry = QAction(QIcon(STYLE_ICON),"Styles",self)
-		entry.triggered.connect((lambda : QDesktopServices.openUrl(QUrl("file:"+styles.STYLE_DIRECTORY))))
-		self.trayFolder.addAction(entry)
+			entry = QAction(QIcon(LOG_ICON),"Logs",self)
+			entry.triggered.connect((lambda : QDesktopServices.openUrl(QUrl("file:"+logs.LOG_DIRECTORY))))
+			self.trayFolder.addAction(entry)
 
-		entry = QAction(QIcon(LOG_ICON),"Logs",self)
-		entry.triggered.connect((lambda : QDesktopServices.openUrl(QUrl("file:"+logs.LOG_DIRECTORY))))
-		self.trayFolder.addAction(entry)
-
-		entry = QAction(QIcon(SCRIPT_ICON),"Scripts",self)
-		entry.triggered.connect((lambda : QDesktopServices.openUrl(QUrl("file:"+commands.SCRIPTS_DIRECTORY))))
-		self.trayFolder.addAction(entry)
+			entry = QAction(QIcon(SCRIPT_ICON),"Scripts",self)
+			entry.triggered.connect((lambda : QDesktopServices.openUrl(QUrl("file:"+commands.SCRIPTS_DIRECTORY))))
+			self.trayFolder.addAction(entry)
 
 		entry = QAction(QIcon(ABOUT_ICON),"About "+APPLICATION_NAME,self)
 		entry.triggered.connect(self.showAbout)
