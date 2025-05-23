@@ -89,6 +89,8 @@ class Merk(QMainWindow):
 			self.options_icon = DARK_OPTIONS_ICON
 			self.bold_icon = DARK_BOLD_ICON
 			self.italic_icon = DARK_ITALIC_ICON
+			self.show_icon = DARK_SHOW_ICON
+			self.hide_icon = DARK_HIDE_ICON
 			self.dark_mode = True
 		else:
 			self.checked_icon = CHECKED_ICON
@@ -98,6 +100,8 @@ class Merk(QMainWindow):
 			self.options_icon = OPTIONS_ICON
 			self.bold_icon = BOLD_ICON
 			self.italic_icon = ITALIC_ICON
+			self.show_icon = SHOW_ICON
+			self.hide_icon = HIDE_ICON
 			self.dark_mode = False
 
 		# Set the application font
@@ -726,6 +730,14 @@ class Merk(QMainWindow):
 						entry = QAction(QIcon(icon),c.name,self)
 						entry.triggered.connect(lambda state,u=w: self.systrayShowWindow(u))
 						sm.addAction(entry)
+
+		if config.MINIMIZE_TO_SYSTRAY:
+			if self.is_hidden:
+				entry = QAction(QIcon(self.show_icon),"Show "+APPLICATION_NAME,self)
+			else:
+				entry = QAction(QIcon(self.hide_icon),"Hide "+APPLICATION_NAME,self)
+			entry.triggered.connect(self.toggleHide)
+			self.trayMenu.addAction(entry)
 
 		e = textSeparator(self,"Options")
 		self.trayMenu.addAction(e)
