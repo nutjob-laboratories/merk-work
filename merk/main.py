@@ -727,7 +727,7 @@ class Merk(QMainWindow):
 						entry.triggered.connect(lambda state,u=w: self.systrayShowWindow(u))
 						sm.addAction(entry)
 
-		e = textSeparator(self,"Options & Tools")
+		e = textSeparator(self,"Options")
 		self.trayMenu.addAction(e)
 
 		if hasattr(self,"settingsMenu"):
