@@ -733,9 +733,9 @@ class Merk(QMainWindow):
 
 		if config.MINIMIZE_TO_SYSTRAY:
 			if self.is_hidden:
-				entry = QAction(QIcon(self.show_icon),"Show "+APPLICATION_NAME,self)
+				entry = QAction(QIcon(self.show_icon),"Show window",self)
 			else:
-				entry = QAction(QIcon(self.hide_icon),"Hide "+APPLICATION_NAME,self)
+				entry = QAction(QIcon(self.hide_icon),"Hide window",self)
 			entry.triggered.connect(self.toggleHide)
 			self.trayMenu.addAction(entry)
 
