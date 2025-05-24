@@ -67,3 +67,5 @@ if os.path.isfile(f"./downloads/merk_setup.zip"): os.remove(f"./downloads/merk_s
 shutil.copy("merk_setup.zip", "./downloads/merk_setup.zip")
 
 os.remove("merk_setup.zip")
+os.remove("setup.exe")
+os.remove("merk.exe")
