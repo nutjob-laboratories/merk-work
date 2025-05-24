@@ -61,7 +61,7 @@ def initialize(directory,directory_name):
 	SCRIPTS_DIRECTORY = os.path.join(directory,directory_name)
 	if not os.path.isdir(SCRIPTS_DIRECTORY): os.mkdir(SCRIPTS_DIRECTORY)
 
-def build_help_and_autocomplete():
+def build_help_and_autocomplete(new_autocomplete=None,new_help=None):
 	global AUTOCOMPLETE
 	global COMMAND_HELP_INFORMATION
 	global HELP
@@ -109,6 +109,9 @@ def build_help_and_autocomplete():
 			config.ISSUE_COMMAND_SYMBOL+"play" : config.ISSUE_COMMAND_SYMBOL+"play ",
 		}
 
+	if new_autocomplete!=None:
+		AUTOCOMPLETE.update(new_autocomplete)
+
 	# The command help system
 	COMMAND_HELP_INFORMATION = [
 		[ "<b>"+config.ISSUE_COMMAND_SYMBOL+"help</b>", "Displays command usage information" ],
@@ -151,6 +154,10 @@ def build_help_and_autocomplete():
 		[ "<b>"+config.ISSUE_COMMAND_SYMBOL+"edit [FILENAME]</b>", "Opens a script in the editor" ],
 		[ "<b>"+config.ISSUE_COMMAND_SYMBOL+"play FILENAME</b>", "Plays a WAV file" ],
 	]
+
+	if new_help!=None:
+		for i in new_help:
+			COMMAND_HELP_INFORMATION.append(i)
 
 	global HELP_DISPLAY_TEMPLATE
 	if config.AUTOCOMPLETE_COMMANDS:
