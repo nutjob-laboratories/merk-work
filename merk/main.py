@@ -2453,12 +2453,13 @@ class Merk(QMainWindow):
 			entry.triggered.connect(self.settingsAutoEmojis)
 			sm.addAction(entry)
 
-		if config.AUTOCOMPLETE_ALIAS:
-			entry = QAction(QIcon(self.checked_icon),"Aliases", self)
-		else:
-			entry = QAction(QIcon(self.unchecked_icon),"Aliases", self)
-		entry.triggered.connect(self.settingsAutoAliases)
-		sm.addAction(entry)
+		if config.INTERPOLATE_ALIASES_INTO_INPUT:
+			if config.AUTOCOMPLETE_ALIAS:
+				entry = QAction(QIcon(self.checked_icon),"Aliases", self)
+			else:
+				entry = QAction(QIcon(self.unchecked_icon),"Aliases", self)
+			entry.triggered.connect(self.settingsAutoAliases)
+			sm.addAction(entry)
 
 		sm = self.settingsMenu.addMenu(QIcon(SPELLCHECK_ICON),"Spellcheck")
 

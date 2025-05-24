@@ -125,6 +125,15 @@ class Dialog(QDialog):
 		self.boldApply()
 		self.selector.setFocus()
 
+	def changedInterpolate(self,state):
+		if self.interpolateAlias.isChecked():
+			self.autocompleteAlias.setEnabled(True)
+		else:
+			self.autocompleteAlias.setEnabled(False)
+		self.changed.show()
+		self.boldApply()
+		self.selector.setFocus()
+
 	def setDarkMode(self,state):
 		self.changed.show()
 		self.restart.show()
@@ -1611,12 +1620,11 @@ class Dialog(QDialog):
 		if config.AUTOCOMPLETE_ALIAS: self.autocompleteAlias.setChecked(True)
 		self.autocompleteAlias.stateChanged.connect(self.changedSetting)
 
-		self.interpolateAlias = QCheckBox("Interpolate aliases into\ncommand input",self)
+		self.interpolateAlias = QCheckBox("Interpolate aliases into input",self)
 		if config.INTERPOLATE_ALIASES_INTO_INPUT: self.interpolateAlias.setChecked(True)
-		self.interpolateAlias.stateChanged.connect(self.changedSetting)
+		self.interpolateAlias.stateChanged.connect(self.changedInterpolate)
 
-		self.interpolateAlias.setStyleSheet("QCheckBox { text-align: left top; } QCheckBox::indicator { subcontrol-origin: padding; subcontrol-position: left top; }")
-
+		if not config.INTERPOLATE_ALIASES_INTO_INPUT: self.autocompleteAlias.setEnabled(False)
 
 		autoLayout1 = QHBoxLayout()
 		autoLayout1.addWidget(self.autocompleteCommands)
