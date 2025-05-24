@@ -1779,6 +1779,10 @@ class Merk(QMainWindow):
 
 	def handleUserInput(self,window,user_input):
 
+		# Interpolate aliases into user input
+		if config.INTERPOLATE_ALIASES_INTO_INPUT:
+			user_input = commands.interpolateAliases(user_input)
+
 		# Handle chat commands
 		if commands.handleChatCommands(self,window,user_input,False): return
 

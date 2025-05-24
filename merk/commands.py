@@ -177,6 +177,24 @@ def build_help_and_autocomplete(new_autocomplete=None,new_help=None):
 
 build_help_and_autocomplete()
 
+def addAlias(name,value):
+	ALIAS[name] = value
+
+def detect_alias(text):
+  pattern = r"\$([^\d]+)"
+  match = re.search(pattern, text)
+  return bool(match)
+
+def interpolateAliases(text):
+	if not detect_alias(text): return text
+	counter = 0
+	while detect_alias(text):
+		for a in ALIAS:
+			text = text.replace(config.ALIAS_INTERPOLATION_SYMBOL+a,ALIAS[a])
+		counter = counter + 1
+		if counter>=99: break
+	return text
+
 def handleChatCommands(gui,window,user_input,is_script):
 	user_input = interpolateAliases(user_input)
 	return executeChatCommands(gui,window,user_input,is_script)
@@ -411,24 +429,6 @@ def connect_to_irc(gui,window,host,port=6667,password=None,ssl=False,reconnect=F
 		execute, # execute script
 	)
 	gui.connectToIrc(i)
-
-def addAlias(name,value):
-	ALIAS[name] = value
-
-def detect_alias(text):
-  pattern = r"\$([^\d]+)"
-  match = re.search(pattern, text)
-  return bool(match)
-
-def interpolateAliases(text):
-	if not detect_alias(text): return text
-	counter = 0
-	while detect_alias(text):
-		for a in ALIAS:
-			text = text.replace(config.ALIAS_INTERPOLATION_SYMBOL+a,ALIAS[a])
-		counter = counter + 1
-		if counter>=99: break
-	return text
 
 def find_sound_file(filename):
 
