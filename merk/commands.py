@@ -526,7 +526,6 @@ def executeCommonCommands(gui,window,user_input,is_script):
 				window.writeText(t,False)
 				return True
 
-
 			value = ' '.join(tokens)
 			addAlias(a,value)
 
@@ -535,8 +534,9 @@ def executeCommonCommands(gui,window,user_input,is_script):
 				window.writeText(t,False)
 			
 			return True
-		if tokens[0].lower()==config.ISSUE_COMMAND_SYMBOL+'alias' and len(tokens)>=1:
 			
+		if tokens[0].lower()==config.ISSUE_COMMAND_SYMBOL+'alias' and len(tokens)>=1:
+
 			if len(ALIAS)==0:
 				t = Message(SYSTEM_MESSAGE,'',"No aliases are currently defined.")
 				window.writeText(t,False)
