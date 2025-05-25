@@ -536,6 +536,12 @@ def executeCommonCommands(gui,window,user_input,is_script):
 			
 			return True
 		if tokens[0].lower()==config.ISSUE_COMMAND_SYMBOL+'alias' and len(tokens)>=1:
+			
+			if len(ALIAS)==0:
+				t = Message(SYSTEM_MESSAGE,'',"No aliases are currently defined.")
+				window.writeText(t,False)
+				return True
+
 			for a in ALIAS:
 				t = Message(SYSTEM_MESSAGE,'',config.ALIAS_INTERPOLATION_SYMBOL+a+" = \""+ALIAS[a]+"\"")
 				window.writeText(t,False)
