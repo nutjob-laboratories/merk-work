@@ -534,7 +534,7 @@ def executeCommonCommands(gui,window,user_input,is_script):
 				window.writeText(t,False)
 			
 			return True
-			
+
 		if tokens[0].lower()==config.ISSUE_COMMAND_SYMBOL+'alias' and len(tokens)>=1:
 
 			if len(ALIAS)==0:
