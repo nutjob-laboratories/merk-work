@@ -525,11 +525,11 @@ def executeCommonCommands(gui,window,user_input,is_script):
 					t.channel = channel_name
 					t.channel_count = channel_count
 				window.writeText(t,False)
-				if len(window.client.server_channel_list)==1:
-					t = Message(SYSTEM_MESSAGE,'',"1 channel found.")
-				else:
-					t = Message(SYSTEM_MESSAGE,'',str(len(window.client.server_channel_list))+" channels found.")
-				window.writeText(t,False)
+			if len(window.client.server_channel_list)==1:
+				t = Message(SYSTEM_MESSAGE,'',"1 channel found.")
+			else:
+				t = Message(SYSTEM_MESSAGE,'',str(len(window.client.server_channel_list))+" channels found.")
+			window.writeText(t,False)
 			return True
 
 		if tokens[0].lower()==config.ISSUE_COMMAND_SYMBOL+'list' and len(tokens)>=2:
