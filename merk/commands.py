@@ -550,8 +550,9 @@ def executeCommonCommands(gui,window,user_input,is_script):
 				channel_topic = entry[2]
 				if fnmatch.fnmatch(channel_name,f"{target}"):
 					results.append(entry)
-				if fnmatch.fnmatch(channel_topic,f"{target}"):
-					results.append(entry)
+				if config.EXAMINE_TOPIC_IN_CHANNEL_LIST_SEARCH:
+					if fnmatch.fnmatch(channel_topic,f"{target}"):
+						results.append(entry)
 
 			results = remove_duplicate_sublists(results)
 
