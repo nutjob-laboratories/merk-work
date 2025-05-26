@@ -789,7 +789,7 @@ class Dialog(QDialog):
 		if config.ASK_BEFORE_CLOSE: self.askBeforeExit.setChecked(True)
 		self.askBeforeExit.stateChanged.connect(self.changedSetting)
 
-		self.examineTopic = QCheckBox("Also search topics in channel\nlist searches",self)
+		self.examineTopic = QCheckBox("Examine topics in channel\nlist searches",self)
 		if config.EXAMINE_TOPIC_IN_CHANNEL_LIST_SEARCH: self.examineTopic.setChecked(True)
 		self.examineTopic.stateChanged.connect(self.changedSetting)
 
