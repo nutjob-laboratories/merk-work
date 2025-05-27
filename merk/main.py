@@ -1570,6 +1570,7 @@ class Merk(QMainWindow):
 				client.need_to_get_list = False
 				if client.list_search_terms!=None:
 					w.showChannelListSearch(client.list_search_terms)
+					w.doSearch()
 					client.list_search_terms = None
 				else:
 					w.showChannelList()
