@@ -5,7 +5,7 @@
 # ██║╚██╔╝██║██╔══██║██╔══██╗██╔═██╗
 # ██║ ╚═╝ ██║ █████╔╝██║  ██║██║  ██╗
 # ╚═╝     ╚═╝ ╚════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
-# Copyright (C) 2021  Daniel Hetrick
+# Copyright (C) 2025  Daniel Hetrick
 # https://github.com/nutjob-laboratories/merk
 # https://github.com/nutjob-laboratories
 #
@@ -491,8 +491,6 @@ def executeCommonCommands(gui,window,user_input,is_script):
 	# |----------|
 	if len(tokens)>=1:
 		if tokens[0].lower()==config.ISSUE_COMMAND_SYMBOL+'refresh' and len(tokens)==1:
-
-			window.client.doing_list_refresh = True
 			window.client.sendLine('LIST')
 			return True
 		if tokens[0].lower()==config.ISSUE_COMMAND_SYMBOL+'refresh':
