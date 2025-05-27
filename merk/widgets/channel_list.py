@@ -81,7 +81,7 @@ class Window(QMainWindow):
 
 		self.search_terms = QLineEdit('')
 		self.search_button = QPushButton("Search")
-		self.reset_button = QPushButton("Reset")
+		self.reset_button = QPushButton("Filter/Reset")
 		self.refresh = QPushButton("Fetch List")
 
 		self.moreFive = QCheckBox("5+",self)
@@ -114,11 +114,11 @@ class Window(QMainWindow):
 
 		self.windowDescription = QLabel(f"""
 			<small>
-			This is a list of channels on <b>{self.server_name}</b>. To join a channel in the
+			This is a list of channels on <b>{self.server_name} ({self.network})</b>. To join a channel in the
 			list, double click on the line the channel appears on. To search the
 			list, enter search terms below, using <b>*</b> for multi-character wildcards,
 			and <b>?</b> for single character wildcards, and press the <b>Search</b> button.
-			To reset the list after a search, press <b>Reset</b> to re-display all channels or
+			To reset the list after a search, press <b>Filter/Reset</b> to re-display all channels or
 			to filter list on channel user count.
 			Press <b>Fetch List</b> to request a fresh channel list from the server.
 			</small>
