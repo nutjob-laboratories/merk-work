@@ -85,11 +85,13 @@ class Window(QMainWindow):
 		self.refresh = QPushButton("Fetch List")
 
 		self.moreFive = QCheckBox("5+",self)
-		self.moreFive.stateChanged.connect(self.moreFiveClick)
-
 		self.moreTwo = QCheckBox("2+",self)
 		self.moreTen = QCheckBox("10+",self)
 		self.moreTwenty = QCheckBox("20+",self)
+
+		self.searchTopic = QCheckBox("Also search topics",self)
+		if config.EXAMINE_TOPIC_IN_CHANNEL_LIST_SEARCH: self.searchTopic.setChecked(True)
+		self.searchTopic.stateChanged.connect(self.changedSearchTopic)
 
 		self.search_terms.setPlaceholderText("Enter search terms here")
 		self.search_button.setDefault(True) 
@@ -110,6 +112,8 @@ class Window(QMainWindow):
 		self.cLayout.addWidget(self.moreFive)
 		self.cLayout.addWidget(self.moreTen)
 		self.cLayout.addWidget(self.moreTwenty)
+		self.cLayout.addWidget(QLabel(" <b>|</b> "))
+		self.cLayout.addWidget(self.searchTopic)
 		self.cLayout.addStretch()
 
 		self.windowDescription = QLabel(f"""
@@ -139,9 +143,12 @@ class Window(QMainWindow):
 
 		self.populate_table(self.data)
 
-	def moreFiveClick(self):
-		#self.refresh_list()
-		pass
+	def changedSearchTopic(self,i):
+		if self.searchTopic.isChecked():
+			config.EXAMINE_TOPIC_IN_CHANNEL_LIST_SEARCH = True
+		else:
+			config.EXAMINE_TOPIC_IN_CHANNEL_LIST_SEARCH = False
+		config.save_settings(config.CONFIG_FILE)
 
 	def doExternalSearch(self,search_terms):
 		self.search_terms.setText(search_terms)
