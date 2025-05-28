@@ -1,17 +1,8 @@
-<p align="center">
-  <img src="https://github.com/nutjob-laboratories/merk//raw/main/graphics/banner.png"><br>
-  <b><big>Open Source IRC Client</big></b><br>
-  <i>A multiple-document interface IRC client for Windows and Linux</i><br>
-</p>
+<h1>MERK 0.039.024</h1>
 
- - [Downloads](#Downloads)
  - [Summary](#Summary)
- - [Running MERK on Windows](#running-merk-on-windows)
  - [Making MERK Portable on Windows](#making-merk-portable-on-windows)
- - [Running MERK with Python](#running-merk-with-python)
  - [Python Requirements](#python-requirements)
- - [Features](#Features)
- - [Screenshots](#screenshots)
  - [Usage](#usage)
  - [Commands](#commands)
  - [Example commandline usage](#example-commandline-usage)
@@ -19,52 +10,22 @@
  - [What does MERK mean?](#what-does-merk-mean)
  - [Does MERK need any help?](#does-merk-need-any-help)
 
-# Downloads
-All files are packed in [ZIP archive files](https://en.wikipedia.org/wiki/ZIP_(file_format)), unless otherwise noted. If you're having trouble downloading any of the files, I have all of the files [mirrored on my public Dropbox](https://www.dropbox.com/scl/fo/7s6fjes5stuxu471e35mr/AO9Y6L9wkCs4QCu2XGtobo8?rlkey=itmf22qmnazzh5ok16tb9ljan&st=sb7gsrsl&dl=0).
-
-| Type| Platform  | Download  |
-| :----:    | :----:    | :----:    |
-| Zip Archive|  Cross-platform  | [Download MERK 0.039.024 (!_PYSIZE_!)](https://github.com/nutjob-laboratories/merk/raw/main/downloads/merk-latest.zip)  |
-| Zip Archive|  Windows | [Download MERK 0.039.024 (!_WINZIP_!)](https://github.com/nutjob-laboratories/merk/raw/main/downloads/merk-windows-latest.zip)|
-|   Windows Installer|  Windows | [Download MERK 0.039.024 (!_WINSETUP_!)](https://github.com/nutjob-laboratories/merk/raw/main/downloads/merk-setup.zip)|
-|   Single Executable|  Windows | [Download MERK 0.039.024 (!_WINEXE_!)](https://github.com/nutjob-laboratories/merk/raw/main/downloads/merk-windows-standalone.zip)|
-
 # Summary
   
 **MERK** is a graphical [open source](https://www.gnu.org/licenses/gpl-3.0.en.html) [Internet relay chat](https://en.wikipedia.org/wiki/Internet_Relay_Chat) client. The current development version is **0.039.024**. It uses a [multiple-document interface](https://en.wikipedia.org/wiki/Multiple-document_interface), much like the popular Windows IRC client [mIRC](https://www.mirc.com/).  **MERK** is written in Python 3, using the [PyQt5](https://pypi.org/project/PyQt5/) and [Twisted](https://twistedmatrix.com/trac/) libraries, and runs on both Windows and Linux. **MERK** is updated frequently with new features and bugfixes.
 
 **MERK** is still in development, but it works, and can be used for most IRC activities.
 
-For those that don't want to install Python or all the requirements, you can [download the **MERK** installer for Windows](https://github.com/nutjob-laboratories/merk/raw/main/downloads/merk-setup.zip).
-
 Join me on the official **MERK** IRC channel, **#merk** on the Libera Chat network! Connect to  Libera in the client as one of the built-in server suggestions, or at **irc.libera.chat**, port **6667** (you can also connect via SSL on port **6697**). Honestly, I work a lot, so I'm almost always idle, but I pop in and chat a few times a day!
 
-# Running MERK on Windows
-
-If you're running Windows, you can run **MERK** without having to install Python or its requirements! First, [download the Windows installer of **MERK** 0.039.024](https://github.com/nutjob-laboratories/merk//raw/main/downloads/merk-setup.zip). Extract the downloaded zip file and double click on `merk-setup.exe` to install **MERK** to wherever you'd like.
-
-For a "portable" version of **MERK**, [download the zip file of **MERK** 0.039.024 for Windows](https://github.com/nutjob-laboratories/merk//raw/main/downloads/merk-windows-latest.zip). Extract the zip archive where ever you want, and double click on `merk.exe` to run **MERK**!
-
-For an even easier "install", [download the "standalone" executable of **MERK** 0.039.024](https://github.com/nutjob-laboratories/merk//raw/main/downloads/merk-windows-standalone.zip) to wherever you want, extract the zipped executable, and double click it to run **MERK**!
-
-The Windows version of **MERK** is being built with [PyInstaller](https://www.pyinstaller.org/).
-
-A note: all commandline arguments, as documented below, work on the standalone version of **MERK**.
-
 # Making MERK Portable on Windows
-If you want to run **MERK** from a USB stick, and save all configuration and user data to the USB stick (or wherever you're running **MERK** from), it's really easy. First, [download the zip file of **MERK** 0.039.024 for Windows](https://github.com/nutjob-laboratories/merk//raw/main/downloads/merk-windows-latest.zip), and extract it to your USB stick. Then, open [Notepad](https://en.wikipedia.org/wiki/Windows_Notepad), and enter this into a new document:
+If you want to run **MERK** from a USB stick, and save all configuration and user data to the USB stick (or wherever you're running **MERK** from), it's really easy. First, open [Notepad](https://en.wikipedia.org/wiki/Windows_Notepad), and enter this into a new document:
 
 ```merk.exe --config-local```
 
 Save this file to wherever you extracted **MERK** to. You can give it any name you'd like, as long as the file extension you save the file to is `BAT`. So, if you'd like to name the file "MyMerk", you'd save the file with the name `MyMerk.bat`. You're done! You've made **MERK** portable.
 
 Whenever you want to run **MERK** off of your USB stick, double click the `.bat` file you created instead of `merk.exe`. This will run **MERK** completely normally, only all configuration files will be saved to the same directory **MERK** "lives" in. So, you can take **MERK** with you on your USB stick, and it will keep all the configuration files and logs on the USB stick.
-
-# Running MERK with Python
-
-First, make sure that all the [requirements](#python-requirements) are installed. Next, [download **MERK**](https://github.com/nutjob-laboratories/merk//raw/main/downloads/merk-latest.zip). Extract the zipfile to a directory of your choice using your favorite archive/zip program. Open a command prompt, navigate to the directory you extracted **MERK** to, and type:
-
-    python merk.py
 
 # Python Requirements
 
@@ -91,84 +52,6 @@ There are three libraries that comes bundled with **MERK**:
  - [pyspellchecker](https://github.com/barrust/pyspellchecker)
  - [emoji](https://github.com/carpedm20/emoji)
 
-# Features
--   Runs on Windows and Linux
--   Supports multiple connections (you can chat on more than one IRC server at a time)
--   Open source ([GPL 3](https://www.gnu.org/licenses/gpl-3.0.en.html))
--   Uses a [multiple document interface](https://en.wikipedia.org/wiki/Multiple-document_interface), much like popular Windows IRC client [mIRC](https://www.mirc.com/)
-    - Multiple channel and server windows can be open for viewing and chatting at once
-    - All chat windows are contained in a single "parent" window
--   If you're using Windows, [you can run **MERK** without installing Python](https://github.com/nutjob-laboratories/merk//raw/main/downloads/merk-windows-latest.zip)!
-- Dark mode!
-  - Dark mode can be enabled from the commandline, or from the settings dialog
-  - If dark mode is enabled from the settings dialog, an application restart is required
-- Audio notifications
-  - Audio notifications are turned off by default
-  - Can be triggered by seven different events, with each one able to be turned on and off
-  - Uses any WAV file as the notification sound, and can be set in the GUI
-- Very configurable, without having to manually edit a configuration file
-    - Control application behavior, logging, features, and more!
-    - Over 100 different settings can be changed, allowing you to customize **MERK** to look and function _exactly_ the way you want it to look and function.
-    - Almost all settings can be changed in the settings dialog without a restart. Have fun testing different options!
-    - Configuration data is stored in JSON
- -  Extensive commandline options
-    - Set defaults and settings
-    - Connect to one or multiple servers automatically on start-up
-    - Almost everything about how **MERK** starts up can be customized
--   A built-in list of over 80 IRC servers to connect to
--   All text colors (and backgrounds) can be customized
-    - Text customization can be saved to importable files
-    - Individual channels can have their own color schemes
-    - Styles are saved and loaded automatically
-      - Channel styles are saved and loaded by network, so they work no matter what server you connect to.
-    - Easy to use GUI text style editor is built-in
-    - Changes to text style are immediate, without having to restart!
--   Built-in [spell checker](https://github.com/barrust/pyspellchecker) (supports English, Spanish, French, and German)
--   [Emoji](https://en.wikipedia.org/wiki/Emoji) support
-    -   Insert emojis into chat by using shortcodes (such as `:joy:` 😂, `:yum:` 😋, etc.)
-    -   A list of supported emoji short codes can be found [here](https://carpedm20.github.io/emoji/all.html?enableList=enable_list_alias)
--   Command/nickname/channel auto-completion
--   Full IRC color support
--   Full scripting engine
-    - Includes a built in script editor, with scripting macros and syntax highlighting
-    - Automatically execute scripts on connection (to join channels, login in ChanServ, etc.)
-- Multithreaded
--   Automatic logging of channel and private chats
-    - Includes a utility to export logs to JSON, CSV, or your own custom format
-    - Logs are stored in JSON, so parsing/scraping your own logs in easy
-
-# Screenshots
-
-<p align="center">
-<center><a href="./graphics/screenshot_big.png"><img src="./graphics/screenshot1.png"></a></center></br>
- <center><i><small>MERK connected to <a href="https://libera.chat/">Libera</a> and <a href="http://www.efnet.org/">EFnet</a>, on Windows 11, using the "fusion" widget set. </small></i></center>
- </p>
- 
- <p align="center">
- <center><a href="./graphics/screenshot_linux_big.png"><img src="./graphics/screenshot_linux2.png"></a></center></br>
-  <center><i><small>MERK connected to <a href="https://www.dal.net/">DALnet</a>, <a href="https://freenode.net/">Freenode</a>, and <a href="https://libera.chat/">Libera</a> on Linux Mint 20.2 in "dark mode", using the "windows" widget set.</small></i></center>
-  </p>
-
-  <p align="center">
- <center><a href="./graphics/connect_1.png"><img src="./graphics/connect_1_small.png"></a><a href="./graphics/connect_2.png"><img src="./graphics/connect_2_small.png"></a><a href="./graphics/connect_3.png"><img src="./graphics/connect_3_small.png"></a></center></br>
-  <center><i><small>The MERK connection dialog, the first thing users see when running MERK. All settings are saved automatically, including the connection script. The extra text describing how the individual settings work can be removed in settings, or with a commandline flag.</small></i></center>
-  </p>
-
-  <p align="center">
- <center><a href="./graphics/styler.png"><img src="./graphics/styler_small.png"></a></center></br>
-  <center><i><small>The text style dialog. The text style can be edited for all windows/channels, or for specific channels. Styles are saved by network, so they are applied no matter what server you're connected to. Changes, once saved, are automatically and instantly applied.</small></i></center>
-  </p>
-
-  <p align="center">
- <center><a href="./graphics/settings.png"><img src="./graphics/settings_small.png"></a></center></br>
-  <center><i><small>The first "page" of the settings dialog. MERK features over 100 settings that can be tweaked until MERK looks and works exactly like you want it to. All settings (except for "dark mode") are applied instantly.</small></i></center>
-  </p>
-
-  <p align="center">
- <center><a href="./graphics/channels.png"><img src="./graphics/channels_small.png"></a></center></br>
-  <center><i><small>The channel list dialog, listing all visible channels on a server. The list can be searched and filtered by user count. This screenshot shows the channel list for the <a href="https://libera.chat/">Libera</a> network.</small></i></center>
-  </p>
-  
 # Usage
 ```
 usage: python merk.py [-h] [--ssl] [-p PASSWORD] [-c CHANNEL[:KEY]] [-n NICKNAME]
@@ -279,7 +162,7 @@ All of these commands can be issued from the text input widget, or from scripts.
 
 
 # Example Commandline Usage
-In the following examples, the first commandline is how you would do the task using **MERK** as a [Python script](https://github.com/nutjob-laboratories/merk//raw/main/downloads/merk-latest.zip), and second commandline is how you would do it using the [**MERK** Windows executable](https://github.com/nutjob-laboratories/merk//raw/main/downloads/merk-windows-latest.zip). Note that the commandlines, other than the initial executable, are the same!
+In the following examples, the first commandline is how you would do the task using **MERK** as a Python script, and second commandline is how you would do it using the **MERK** Windows executable. Note that the commandlines, other than the initial executable, are the same!
 
 Let's assume that you want to use the commandline to connect **MERK** to the `2600.net` network and join the `#linux` channel:
 ```
