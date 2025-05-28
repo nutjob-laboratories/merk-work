@@ -24,10 +24,19 @@ x = open("README.txt",mode="r", encoding='latin-1')
 readme = str(x.read())
 x.close()
 
+x = open("HELP.txt",mode="r", encoding='latin-1')
+helpfile = str(x.read())
+x.close()
+
 readme = readme.replace("!_VERSION_!",major)
 readme = readme.replace("!_MINOR_!",minor)
 readme = readme.replace("!_FULL_VERSION_!",major+"."+minor)
 readme = readme.replace("!_WIN_VERSION_!",win_major+"."+win_minor)
+
+helpfile = readme.replace("!_VERSION_!",major)
+helpfile = readme.replace("!_MINOR_!",minor)
+helpfile = readme.replace("!_FULL_VERSION_!",major+"."+minor)
+helpfile = readme.replace("!_WIN_VERSION_!",win_major+"."+win_minor)
 
 # !_PYSIZE_!
 dist_file_size =  os.path.getsize("./downloads/merk-latest.zip")
@@ -53,4 +62,9 @@ readme = readme.replace("!_WINSETUP_!",f"{file_size_mb:.2f} MB")
 os.remove("README.md")
 f = open("README.md",mode="w", encoding='latin-1')
 f.write(readme)
+f.close()
+
+os.remove("HELP.md")
+f = open("HELP.md",mode="w", encoding='latin-1')
+f.write(helpfile)
 f.close()
