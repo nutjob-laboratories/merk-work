@@ -116,22 +116,24 @@ class Window(QMainWindow):
 		self.cLayout.addWidget(self.searchTopic)
 		self.cLayout.addStretch()
 
-		self.windowDescription = QLabel(f"""
-			<small>
-			This is a list of channels on <b>{self.server_name} ({self.network})</b>. To join a channel in the
-			list, double click on the line the channel appears on. To search the
-			list, enter search terms below, using <b>*</b> for multi-character wildcards,
-			and <b>?</b> for single character wildcards, and press the <b>Search</b> button.
-			To reset the list after a search, press <b>Filter/Reset</b> to re-display all channels or
-			to filter list on channel user count.
-			Press <b>Fetch List</b> to request a fresh channel list from the server.
-			</small>
-			""")
-		self.windowDescription.setWordWrap(True)
-		self.windowDescription.setAlignment(Qt.AlignJustify)
+		if not self.parent.simpleconn:
+			self.windowDescription = QLabel(f"""
+				<small>
+				This is a list of channels on <b>{self.server_name} ({self.network})</b>. To join a channel in the
+				list, double click on the line the channel appears on. To search the
+				list, enter search terms below, using <b>*</b> for multi-character wildcards,
+				and <b>?</b> for single character wildcards, and press the <b>Search</b> button.
+				To reset the list after a search, press <b>Filter/Reset</b> to re-display all channels or
+				to filter list on channel user count.
+				Press <b>Fetch List</b> to request a fresh channel list from the server.
+				</small>
+				""")
+			self.windowDescription.setWordWrap(True)
+			self.windowDescription.setAlignment(Qt.AlignJustify)
 
 		self.layout = QVBoxLayout()
-		self.layout.addWidget(self.windowDescription)
+		if not self.parent.simpleconn:
+			self.layout.addWidget(self.windowDescription)
 		self.layout.addLayout(self.sLayout)
 		self.layout.addLayout(self.cLayout)
 		self.layout.addWidget(self.table_widget)
