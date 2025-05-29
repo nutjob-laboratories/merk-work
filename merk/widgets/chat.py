@@ -1946,6 +1946,34 @@ def buildServerSettingsMenu(self,client):
 
 	optionsMenu = QMenu("Server settings")
 
+	e = textSeparator(self,"Server")
+	optionsMenu.addAction(e)
+
+	if client.hostname:
+		name = client.hostname
+	else:
+		name = client.server+":"+str(client.port)
+
+	if hasattr(client,"network"):
+		mynet = client.network
+	else:
+		mynet = "Unknown"
+
+	e = plainTextAction(self,"<b>Host"+f":</b> {name}")
+	optionsMenu.addAction(e)
+
+	e = plainTextAction(self,"<b>Port"+f":</b> {client.port}")
+	optionsMenu.addAction(e)
+
+	e = plainTextAction(self,"<b>Network"+f":</b> {mynet}")
+	optionsMenu.addAction(e)
+
+	if client.kwargs["ssl"]:
+		e = plainTextAction(self,"<b>Connection:</b> SSL/TLS")
+	else:
+		e = plainTextAction(self,"<b>Connection:</b> TCP/IP")
+	optionsMenu.addAction(e)
+
 	e = textSeparator(self,"Limits")
 	optionsMenu.addAction(e)
 
