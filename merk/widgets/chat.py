@@ -1610,6 +1610,7 @@ class Window(QMainWindow):
 		if self.window_type==CHANNEL_WINDOW or self.window_type==PRIVATE_WINDOW:
 			if save_logs:
 				logs.saveLog(self.client.network,self.name,self.new_log,logs.LOG_DIRECTORY)
+				self.parent.buildToolsMenu()
 
 
 		# Let the parent know that this subwindow
@@ -1645,7 +1646,7 @@ class Window(QMainWindow):
 					if len(self.new_log)>0:
 						logs.saveLog(self.client.network,self.name,self.new_log,logs.LOG_DIRECTORY)
 						self.new_log = []
-					self.parent.buildSettingsMenu()
+					self.parent.buildToolsMenu()
 
 		self.dosave.start(config.LOG_SAVE_INTERVAL)
 
@@ -1659,7 +1660,6 @@ class Window(QMainWindow):
 				efl = len('json')+1
 				if fileName[-efl:].lower()!=".json": fileName = fileName+".json"
 				logs.saveLogFile(self.client.network,self.name,self.new_log,logs.LOG_DIRECTORY,fileName)
-				self.parent.buildSettingsMenu()
 
 	def menuSetLanguage(self,language):
 		self.changeSpellcheckLanguage(language)
