@@ -1658,10 +1658,10 @@ class Window(QMainWindow):
 			fileName, _ = QFileDialog.getSaveFileName(self,"Save Log As...","",f"{APPLICATION_NAME} Log (*.json);;All Files (*)", options=options)
 			if fileName:
 				_, file_extension = os.path.splitext(fileName)
-					if file_extension=='':
-						efl = len('json')+1
-						if fileName[-efl:].lower()!=".json": fileName = fileName+".json"
-				logs.saveLogFile(self.client.network,self.name,self.log,logs.LOG_DIRECTORY,fileName)
+				if file_extension=='':
+					efl = len('json')+1
+					if fileName[-efl:].lower()!=".json": fileName = fileName+".json"
+				logs.saveLogFile(self.client.network,self.name,self.new_log,logs.LOG_DIRECTORY,fileName)
 
 	def menuSetLanguage(self,language):
 		self.changeSpellcheckLanguage(language)
