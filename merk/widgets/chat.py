@@ -1655,7 +1655,7 @@ class Window(QMainWindow):
 		if self.window_type==CHANNEL_WINDOW or self.window_type==PRIVATE_WINDOW:
 			options = QFileDialog.Options()
 			options |= QFileDialog.DontUseNativeDialog
-			fileName, _ = QFileDialog.getSaveFileName(self,"Save Log As...","",f"{APPLICATION_NAME} Log (*.json);;All Files (*)", options=options)
+			fileName, _ = QFileDialog.getSaveFileName(self,"Save log as...","",f"{APPLICATION_NAME} Log (*.json);;All Files (*)", options=options)
 			if fileName:
 				_, file_extension = os.path.splitext(fileName)
 				if file_extension=='':
