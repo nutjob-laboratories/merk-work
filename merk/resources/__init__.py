@@ -32,7 +32,6 @@ from datetime import datetime
 import sys
 import os
 import math
-import base64
 
 from .version import *
 from .servers import *
@@ -69,17 +68,35 @@ SYSTEM_PREPEND_OPTIONS = [
 	"&mdash;",
 ]
 
-def encode_filename(filename):
-	enc = filename.encode('utf-8')
-	output = base64.urlsafe_b64encode(enc)
-	return output
+LOG_AND_STYLE_FILENAME_DELIMITER = "-"
 
-def decode_filename(encoded_filename):
-	if isinstance(encoded_filename, str):
-		encoded_filename = encoded_filename.encode('utf-8')
-	decoded_filename_bytes = base64.urlsafe_b64decode(encoded_filename)
-	decoded_filename = decoded_filename_bytes.decode('utf-8')
-	return decoded_filename
+def escape_for_filename(filename):
+	filename = filename.replace('<','_lt_')
+	filename = filename.replace('>','_gt_')
+	filename = filename.replace(':','_cn_')
+	filename = filename.replace('"','_qu_')
+	filename = filename.replace('/','_fs_')
+	filename = filename.replace('\\','_bs_')
+	filename = filename.replace('|','_pp_')
+	filename = filename.replace('?','_qm_')
+	filename = filename.replace('*','_ax_')
+	filename = filename.replace(LOG_AND_STYLE_FILENAME_DELIMITER,'_dm_')
+
+	return filename
+
+def deescape_for_filename(filename):
+	filename = filename.replace('_lt_','<')
+	filename = filename.replace('_gt_','>')
+	filename = filename.replace('_cn_',':')
+	filename = filename.replace('_qu_','"')
+	filename = filename.replace('_fs_','/')
+	filename = filename.replace('_bs_','\\')
+	filename = filename.replace('_pp_','|')
+	filename = filename.replace('_qm_','?')
+	filename = filename.replace('_ax_','*')
+	filename = filename.replace('_dm_',LOG_AND_STYLE_FILENAME_DELIMITER)
+
+	return filename
 
 def remove_duplicate_sublists(list_of_lists):
 	seen = set()
