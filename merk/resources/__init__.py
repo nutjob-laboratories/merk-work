@@ -32,6 +32,7 @@ from datetime import datetime
 import sys
 import os
 import math
+import base64
 
 from .version import *
 from .servers import *
@@ -67,6 +68,18 @@ SYSTEM_PREPEND_OPTIONS = [
 	"&bull;",
 	"&mdash;",
 ]
+
+def encode_filename(filename):
+	enc = filename.encode('utf-8')
+	output = base64.urlsafe_b64encode(enc)
+	return output
+
+def decode_filename(encoded_filename):
+	if isinstance(encoded_filename, str):
+		encoded_filename = encoded_filename.encode('utf-8')
+	decoded_filename_bytes = base64.urlsafe_b64decode(encoded_filename)
+	decoded_filename = decoded_filename_bytes.decode('utf-8')
+	return decoded_filename
 
 def remove_duplicate_sublists(list_of_lists):
 	seen = set()
