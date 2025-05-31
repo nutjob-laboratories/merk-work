@@ -2102,7 +2102,7 @@ class Dialog(QDialog):
 
 		entry = QListWidgetItem()
 		entry.setTextAlignment(Qt.AlignHCenter|Qt.AlignVCenter)
-		entry.setText("Highlighting")
+		entry.setText("Script Highlighting")
 		entry.widget = self.syntaxPage
 		entry.setIcon(QIcon(SCRIPT_ICON))
 		self.selector.addItem(entry)
