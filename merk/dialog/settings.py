@@ -1476,10 +1476,17 @@ class Dialog(QDialog):
 		if config.DISPLAY_NICK_ON_SERVER_WINDOWS: self.displayServNicks.setChecked(True)
 		self.displayServNicks.stateChanged.connect(self.changedSetting)
 
+		self.showServRefresh = QCheckBox("Show channel list refresh button\non server windows",self)
+		if config.SHOW_LIST_REFRESH_BUTTON_ON_SERVER_WINDOWS: self.showServRefresh.setChecked(True)
+		self.showServRefresh.stateChanged.connect(self.changedSetting)
+
+		self.showServRefresh.setStyleSheet("QCheckBox { text-align: left top; } QCheckBox::indicator { subcontrol-origin: padding; subcontrol-position: left top; }")
+
 		subwindowLayout = QVBoxLayout()
 		subwindowLayout.addWidget(widgets.textSeparatorLabel(self,"<b>subwindow settings</b>"))
 		subwindowLayout.addWidget(self.showInfo)
 		subwindowLayout.addWidget(self.displayServNicks)
+		subwindowLayout.addWidget(self.showServRefresh)
 		subwindowLayout.addWidget(self.showInputMenu)
 		subwindowLayout.addWidget(self.showContext)
 		subwindowLayout.addWidget(self.showStatusServer)
@@ -2467,6 +2474,7 @@ class Dialog(QDialog):
 		config.SHOW_CHANNEL_LIST_IN_WINDOWS_MENU = self.showChannelList.isChecked()
 		config.SEARCH_ALL_TERMS_IN_CHANNEL_LIST = self.searchAllTerms.isChecked()
 		config.SHOW_SERVER_INFO_IN_WINDOWS_MENU = self.showServerInfo.isChecked()
+		config.SHOW_LIST_REFRESH_BUTTON_ON_SERVER_WINDOWS = self.showServRefresh.isChecked()
 
 		if self.simpleConnect.isChecked():
 			self.parent.simpleconn = True
@@ -2559,6 +2567,8 @@ class Dialog(QDialog):
 		self.parent.toggleInputMenu()
 
 		self.parent.toggleServNickDisplay()
+
+		self.parent.toggleRefreshButton()
 
 		self.parent.updateStatusBar()
 

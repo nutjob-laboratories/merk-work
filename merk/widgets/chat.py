@@ -173,6 +173,9 @@ class Window(QMainWindow):
 			self.refresh_button.setFlat(True)
 			serverBar.addWidget(self.refresh_button)
 
+			if not config.SHOW_LIST_REFRESH_BUTTON_ON_SERVER_WINDOWS:
+				self.refresh_button.hide()
+
 			self.list_button = QPushButton("")
 			self.list_button.setIcon(QIcon(LIST_ICON))
 			self.list_button.clicked.connect(self.showChannelList)
@@ -640,6 +643,13 @@ class Window(QMainWindow):
 			self.parent.showSubWindow(self.client.channel_list_window)
 			c = self.client.channel_list_window.widget()
 			c.doExternalSearch(search_terms)
+
+	def toggleRefreshButton(self):
+		if self.window_type==SERVER_WINDOW:
+			if config.SHOW_LIST_REFRESH_BUTTON_ON_SERVER_WINDOWS:
+				self.refresh_button.show()
+			else:
+				self.refresh_button.hide()
 
 	def toggleStatusBar(self):
 		if self.window_type==SERVER_WINDOW:
