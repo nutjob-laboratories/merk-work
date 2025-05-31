@@ -776,9 +776,12 @@ class Dialog(QDialog):
 		if config.MAXIMIZE_ON_STARTUP: self.maxOnStart.setChecked(True)
 		self.maxOnStart.stateChanged.connect(self.changedSetting)
 
-		self.showNetLinks = QCheckBox("Show known links to network homepages",self)
+		self.showNetLinks = QCheckBox("Show known links to network\nhomepages",self)
 		if config.SHOW_LINKS_TO_NETWORK_WEBPAGES: self.showNetLinks.setChecked(True)
 		self.showNetLinks.stateChanged.connect(self.changedSetting)
+
+		self.showNetLinks.setStyleSheet("QCheckBox { text-align: left top; } QCheckBox::indicator { subcontrol-origin: padding; subcontrol-position: left top; }")
+
 
 		self.forceDefault = QCheckBox("Force all chat windows to use\nthe default text style",self)
 		if config.FORCE_DEFAULT_STYLE: self.forceDefault.setChecked(True)
@@ -827,11 +830,11 @@ class Dialog(QDialog):
 		applicationLayout.addWidget(QLabel(' '))
 		applicationLayout.addWidget(widgets.textSeparatorLabel(self,"<b>application</b>"))
 		applicationLayout.addWidget(self.maxOnStart)
+		applicationLayout.addWidget(self.alwaysOnTop)
+		applicationLayout.addWidget(self.askBeforeExit)
 		applicationLayout.addWidget(self.showChatInTitle)
 		applicationLayout.addWidget(self.simpleConnect)
 		applicationLayout.addWidget(self.showNetLinks)
-		applicationLayout.addWidget(self.alwaysOnTop)
-		applicationLayout.addWidget(self.askBeforeExit)
 		applicationLayout.addWidget(self.examineTopic)
 		applicationLayout.addWidget(self.searchAllTerms)
 		applicationLayout.addWidget(self.showChannelList)
