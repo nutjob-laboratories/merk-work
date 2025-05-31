@@ -767,10 +767,6 @@ class Dialog(QDialog):
 		self.showChatInTitle = QCheckBox("Show active chat in window title",self)
 		if config.DISPLAY_ACTIVE_CHAT_IN_TITLE: self.showChatInTitle.setChecked(True)
 		self.showChatInTitle.stateChanged.connect(self.changedSetting)
-
-		self.showSystray = QCheckBox("Show system tray icon",self)
-		if config.SHOW_SYSTRAY_ICON: self.showSystray.setChecked(True)
-		self.showSystray.stateChanged.connect(self.changedSystrayMin)
 		
 		self.simpleConnect = QCheckBox("Simplified dialogs",self)
 		if config.SIMPLIFIED_DIALOGS: self.simpleConnect.setChecked(True)
@@ -832,7 +828,6 @@ class Dialog(QDialog):
 		applicationLayout.addWidget(widgets.textSeparatorLabel(self,"<b>application</b>"))
 		applicationLayout.addWidget(self.maxOnStart)
 		applicationLayout.addWidget(self.showChatInTitle)
-		applicationLayout.addWidget(self.showSystray)
 		applicationLayout.addWidget(self.simpleConnect)
 		applicationLayout.addWidget(self.showNetLinks)
 		applicationLayout.addWidget(self.alwaysOnTop)
@@ -2037,6 +2032,9 @@ class Dialog(QDialog):
 		self.systrayMinOnClose.stateChanged.connect(self.changedSetting)
 		self.systrayMinOnClose.setStyleSheet("QCheckBox { text-align: left top; } QCheckBox::indicator { subcontrol-origin: padding; subcontrol-position: left top; }")
 
+		self.showSystray = QCheckBox("Show system tray icon",self)
+		if config.SHOW_SYSTRAY_ICON: self.showSystray.setChecked(True)
+		self.showSystray.stateChanged.connect(self.changedSystrayMin)
 
 		discLay = QHBoxLayout()
 		discLay.addWidget(self.systrayDisconnect)
@@ -2056,6 +2054,7 @@ class Dialog(QDialog):
 
 		systrayLayout = QVBoxLayout()
 		systrayLayout.addWidget(widgets.textSeparatorLabel(self,"<b>system tray settings</b>"))
+		systrayLayout.addWidget(self.showSystray)
 		systrayLayout.addWidget(self.showSystrayMenu)
 		systrayLayout.addWidget(self.minSystray)
 		systrayLayout.addWidget(self.systrayNotify)
