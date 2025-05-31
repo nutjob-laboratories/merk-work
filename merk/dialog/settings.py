@@ -2018,7 +2018,7 @@ class Dialog(QDialog):
 		self.systrayMode.stateChanged.connect(self.changedSetting)
 		self.systrayMode.setStyleSheet("QCheckBox { text-align: left top; } QCheckBox::indicator { subcontrol-origin: padding; subcontrol-position: left top; }")
 
-		self.systrayMinOnClose = QCheckBox("Closing main window minimizes\nto tray",self)
+		self.systrayMinOnClose = QCheckBox("Closing main window with window\ncontrols minimizes to tray",self)
 		if config.CLOSING_WINDOW_MINIMIZES_TO_TRAY: self.systrayMinOnClose.setChecked(True)
 		self.systrayMinOnClose.stateChanged.connect(self.changedSetting)
 		self.systrayMinOnClose.setStyleSheet("QCheckBox { text-align: left top; } QCheckBox::indicator { subcontrol-origin: padding; subcontrol-position: left top; }")
