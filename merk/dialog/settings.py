@@ -2109,13 +2109,13 @@ class Dialog(QDialog):
 
 		self.stack.addWidget(self.syntaxPage)
 
-		self.syntaxcomment = widgets.SyntaxColor('comment', "Comments   ",self.SYNTAX_COMMENT_COLOR,self.SYNTAX_COMMENT_STYLE,self)
-		self.syntaxcommand = widgets.SyntaxColor('command', "Commands   ",self.SYNTAX_COMMAND_COLOR,self.SYNTAX_COMMAND_STYLE,self)
-		self.syntaxchannel = widgets.SyntaxColor('channel', "Channels   ",self.SYNTAX_CHANNEL_COLOR,self.SYNTAX_CHANNEL_STYLE,self)
-		self.syntaxalias = widgets.SyntaxColor('alias', "Aliases    ",self.SYNTAX_ALIAS_COLOR,self.SYNTAX_ALIAS_STYLE,self)
+		self.syntaxcomment = widgets.SyntaxColor('comment', "<b>Comments</b>",self.SYNTAX_COMMENT_COLOR,self.SYNTAX_COMMENT_STYLE,self)
+		self.syntaxcommand = widgets.SyntaxColor('command', "<b>Commands</b>",self.SYNTAX_COMMAND_COLOR,self.SYNTAX_COMMAND_STYLE,self)
+		self.syntaxchannel = widgets.SyntaxColor('channel', "<b>Channels</b>",self.SYNTAX_CHANNEL_COLOR,self.SYNTAX_CHANNEL_STYLE,self)
+		self.syntaxalias = widgets.SyntaxColor('alias', "<b>Aliases</b>",self.SYNTAX_ALIAS_COLOR,self.SYNTAX_ALIAS_STYLE,self)
 
-		self.syntaxfore = widgets.SyntaxTextColor('fore', "Text       ",self.SYNTAX_FOREGROUND,self)
-		self.syntaxback = widgets.SyntaxTextColor('back', "Background ",self.SYNTAX_BACKGROUND,self)
+		self.syntaxfore = widgets.SyntaxTextColor('fore', "<b>Text Color</b>",self.SYNTAX_FOREGROUND,self)
+		self.syntaxback = widgets.SyntaxTextColor('back', "<b>Background</b>",self.SYNTAX_BACKGROUND,self)
 
 		self.syntaxcomment.syntaxChanged.connect(self.syntaxChanged)
 		self.syntaxcommand.syntaxChanged.connect(self.syntaxChanged)
@@ -2137,24 +2137,15 @@ class Dialog(QDialog):
 		self.syntaxDescription.setWordWrap(True)
 		self.syntaxDescription.setAlignment(Qt.AlignJustify)
 
-		tbLay = QHBoxLayout()
-		tbLay.addWidget(self.syntaxfore)
-		tbLay.addWidget(self.syntaxback)
-
-		scLine1 = QHBoxLayout()
-		scLine1.addWidget(self.syntaxcomment)
-		scLine1.addWidget(self.syntaxcommand)
-
-		scLine2 = QHBoxLayout()
-		scLine2.addWidget(self.syntaxchannel)
-		scLine2.addWidget(self.syntaxalias)
+		tbLay = QFormLayout()
+		tbLay.addRow(self.syntaxfore, self.syntaxback)
+		tbLay.addRow(self.syntaxcomment, self.syntaxcommand)
+		tbLay.addRow(self.syntaxchannel, self.syntaxalias)
 
 		syntaxLayout = QVBoxLayout()
 		syntaxLayout.addWidget(widgets.textSeparatorLabel(self,"<b>syntax highlighting</b>"))
 		syntaxLayout.addWidget(self.syntaxDescription)
 		syntaxLayout.addLayout(tbLay)
-		syntaxLayout.addLayout(scLine1)
-		syntaxLayout.addLayout(scLine2)
 		syntaxLayout.addStretch()
 
 		self.syntaxPage.setLayout(syntaxLayout)
