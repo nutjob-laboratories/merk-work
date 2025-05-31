@@ -911,6 +911,7 @@ class Merk(QMainWindow):
 			w.info_button.setEnabled(True)
 			w.script_button.setEnabled(True)
 			w.list_button.setEnabled(True)
+			w.refresh_button.setEnabled(True)
 
 			self.buildWindowsMenu()
 		
@@ -1565,6 +1566,7 @@ class Merk(QMainWindow):
 		if w:
 			t = Message(SYSTEM_MESSAGE,"",f"Channel list refresh is complete!")
 			w.writeText(t)
+			w.refreshInfoMenu()
 
 			if client.need_to_get_list:
 				client.need_to_get_list = False
@@ -2813,6 +2815,10 @@ class Merk(QMainWindow):
 		else:
 			self.showSubWindow(c.client.channel_list_window)
 
+	def menuRefreshList(self,sw):
+		c = sw.widget()
+		c.client.sendLine("LIST")
+
 	def buildWindowsMenu(self):
 
 		# Rebuild systray menu
@@ -2872,6 +2878,14 @@ class Merk(QMainWindow):
 					entry = widgets.ExtendedMenuItemNoAction(self,NETWORK_MENU_ICON,mynet,desc,CUSTOM_MENU_ICON_SIZE)
 					sm.addAction(entry)
 
+					if config.SHOW_SERVER_INFO_IN_WINDOWS_MENU:
+						ssetting = sm.addMenu(c.server_info_menu)
+						if c.client.kwargs["ssl"]:
+							icon = QIcon(VISITED_SECURE_ICON)
+						else:
+							icon = QIcon(VISITED_BOOKMARK_ICON)
+						ssetting.setIcon(icon)
+
 					if config.SHOW_CHANNEL_LIST_IN_WINDOWS_MENU:
 						entry = QAction(QIcon(LIST_ICON),"Server channel list",self)
 						entry.triggered.connect(lambda state,u=sw: self.menuChannelList(u))
@@ -2880,12 +2894,13 @@ class Merk(QMainWindow):
 						if not c.list_button.isEnabled():
 							entry.setEnabled(False)
 
-					ssetting = sm.addMenu(c.server_info_menu)
-					if c.client.kwargs["ssl"]:
-						icon = QIcon(VISITED_SECURE_ICON)
-					else:
-						icon = QIcon(VISITED_BOOKMARK_ICON)
-					ssetting.setIcon(icon)
+
+						entry = QAction(QIcon(REFRESH_ICON),"Refresh channel list",self)
+						entry.triggered.connect(lambda state,u=sw: self.menuRefreshList(u))
+						sm.addAction(entry)
+
+						if not c.list_button.isEnabled():
+							entry.setEnabled(False)
 
 					sm.addSeparator()
 

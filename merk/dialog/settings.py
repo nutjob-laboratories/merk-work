@@ -804,9 +804,9 @@ class Dialog(QDialog):
 
 		self.examineTopic.setStyleSheet("QCheckBox { text-align: left top; } QCheckBox::indicator { subcontrol-origin: padding; subcontrol-position: left top; }")
 
-		self.showChannelList = QCheckBox("Show channel list option in\nthe windows menu",self)
+		self.showChannelList = QCheckBox("Show channel list options in\nthe windows menu",self)
 		if config.SHOW_CHANNEL_LIST_IN_WINDOWS_MENU: self.showChannelList.setChecked(True)
-		self.showChannelList.stateChanged.connect(self.changedMenuOption)
+		self.showChannelList.stateChanged.connect(self.changedSetting)
 
 		self.showChannelList.setStyleSheet("QCheckBox { text-align: left top; } QCheckBox::indicator { subcontrol-origin: padding; subcontrol-position: left top; }")
 
@@ -815,6 +815,12 @@ class Dialog(QDialog):
 		self.searchAllTerms.stateChanged.connect(self.changedSetting)
 
 		self.searchAllTerms.setStyleSheet("QCheckBox { text-align: left top; } QCheckBox::indicator { subcontrol-origin: padding; subcontrol-position: left top; }")
+
+		self.showServerInfo = QCheckBox("Show server information in\nthe windows menu",self)
+		if config.SHOW_SERVER_INFO_IN_WINDOWS_MENU: self.showServerInfo.setChecked(True)
+		self.showServerInfo.stateChanged.connect(self.changedSetting)
+
+		self.showServerInfo.setStyleSheet("QCheckBox { text-align: left top; } QCheckBox::indicator { subcontrol-origin: padding; subcontrol-position: left top; }")
 
 		applicationLayout = QVBoxLayout()
 		applicationLayout.addWidget(widgets.textSeparatorLabel(self,"<b>default font</b>"))
@@ -834,6 +840,7 @@ class Dialog(QDialog):
 		applicationLayout.addWidget(self.examineTopic)
 		applicationLayout.addWidget(self.searchAllTerms)
 		applicationLayout.addWidget(self.showChannelList)
+		applicationLayout.addWidget(self.showServerInfo)
 		applicationLayout.addWidget(self.forceDefault)
 		applicationLayout.addStretch()
 
@@ -2459,6 +2466,7 @@ class Dialog(QDialog):
 		config.WINDOWBAR_INCLUDE_LIST = self.windowbarLists.isChecked()
 		config.SHOW_CHANNEL_LIST_IN_WINDOWS_MENU = self.showChannelList.isChecked()
 		config.SEARCH_ALL_TERMS_IN_CHANNEL_LIST = self.searchAllTerms.isChecked()
+		config.SHOW_SERVER_INFO_IN_WINDOWS_MENU = self.showServerInfo.isChecked()
 
 		if self.simpleConnect.isChecked():
 			self.parent.simpleconn = True
@@ -2503,6 +2511,7 @@ class Dialog(QDialog):
 		config.save_settings(config.CONFIG_FILE)
 
 		self.parent.buildSettingsMenu()
+		self.parent.buildWindowsMenu()
 
 		self.parent.app.setStyle(self.qt_style)
 
