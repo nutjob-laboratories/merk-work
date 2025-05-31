@@ -269,6 +269,7 @@ class Dialog(QDialog):
 				self.systrayInvite.setEnabled(True)
 				self.systrayNotice.setEnabled(True)
 				self.systrayMode.setEnabled(True)
+				self.systrayMinOnClose.setEnabled(True)
 			else:
 				self.systrayNotify.setEnabled(False)
 				self.listSystray.setEnabled(False)
@@ -279,6 +280,7 @@ class Dialog(QDialog):
 				self.systrayInvite.setEnabled(False)
 				self.systrayNotice.setEnabled(False)
 				self.systrayMode.setEnabled(False)
+				self.systrayMinOnClose.setEnabled(False)
 		else:
 			self.showSystrayMenu.setEnabled(False)
 			self.minSystray.setEnabled(False)
@@ -291,6 +293,7 @@ class Dialog(QDialog):
 			self.systrayInvite.setEnabled(False)
 			self.systrayNotice.setEnabled(False)
 			self.systrayMode.setEnabled(False)
+			self.systrayMinOnClose.setEnabled(False)
 		self.selector.setFocus()
 		self.changed.show()
 		self.boldApply()
@@ -2015,6 +2018,12 @@ class Dialog(QDialog):
 		self.systrayMode.stateChanged.connect(self.changedSetting)
 		self.systrayMode.setStyleSheet("QCheckBox { text-align: left top; } QCheckBox::indicator { subcontrol-origin: padding; subcontrol-position: left top; }")
 
+		self.systrayMinOnClose = QCheckBox("Closing main window minimizes\nto tray",self)
+		if config.CLOSING_WINDOW_MINIMIZES_TO_TRAY: self.systrayMinOnClose.setChecked(True)
+		self.systrayMinOnClose.stateChanged.connect(self.changedSetting)
+		self.systrayMinOnClose.setStyleSheet("QCheckBox { text-align: left top; } QCheckBox::indicator { subcontrol-origin: padding; subcontrol-position: left top; }")
+
+
 		discLay = QHBoxLayout()
 		discLay.addWidget(self.systrayDisconnect)
 		discLay.addStretch()
@@ -2037,6 +2046,7 @@ class Dialog(QDialog):
 		systrayLayout.addWidget(self.minSystray)
 		systrayLayout.addWidget(self.systrayNotify)
 		systrayLayout.addWidget(self.listSystray)
+		systrayLayout.addWidget(self.systrayMinOnClose)
 		systrayLayout.addWidget(QLabel(' '))
 		systrayLayout.addWidget(widgets.textSeparatorLabel(self,"<b>notifications</b>"))
 		systrayLayout.addLayout(nickPriv)
@@ -2060,6 +2070,7 @@ class Dialog(QDialog):
 				self.systrayInvite.setEnabled(True)
 				self.systrayNotice.setEnabled(True)
 				self.systrayMode.setEnabled(True)
+				self.systrayMinOnClose.setEnabled(True)
 			else:
 				self.systrayNotify.setEnabled(False)
 				self.listSystray.setEnabled(False)
@@ -2070,6 +2081,7 @@ class Dialog(QDialog):
 				self.systrayInvite.setEnabled(False)
 				self.systrayNotice.setEnabled(False)
 				self.systrayMode.setEnabled(False)
+				self.systrayMinOnClose.setEnabled(False)
 		else:
 			self.showSystrayMenu.setEnabled(False)
 			self.minSystray.setEnabled(False)
@@ -2082,6 +2094,7 @@ class Dialog(QDialog):
 			self.systrayInvite.setEnabled(False)
 			self.systrayNotice.setEnabled(False)
 			self.systrayMode.setEnabled(False)
+			self.systrayMinOnClose.setEnabled(False)
 
 		# Syntax
 
